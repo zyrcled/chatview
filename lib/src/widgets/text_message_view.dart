@@ -39,6 +39,8 @@ class TextMessageView extends StatelessWidget {
     this.messageReactionConfig,
     this.highlightMessage = false,
     this.highlightColor,
+    this.highlightScale = 0,
+    this.emojiMessageConfig,
   }) : super(key: key);
 
   /// Represents current message is sent by current user.
@@ -65,6 +67,11 @@ class TextMessageView extends StatelessWidget {
   /// Allow user to set color of highlighted message.
   final Color? highlightColor;
 
+  /// Provides scale of highlighted image when user taps on replied image.
+  final double highlightScale;
+
+  final EmojiMessageConfiguration? emojiMessageConfig;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -88,19 +95,28 @@ class TextMessageView extends StatelessWidget {
             color: highlightMessage ? highlightColor : _color,
             borderRadius: _borderRadius(textMessage),
           ),
-          child: textMessage.isUrl
-              ? LinkPreview(
-                  linkPreviewConfig: _linkPreviewConfig,
-                  url: textMessage,
+          child: textMessage.isAllEmoji
+              ? Transform.scale(
+                  scale: highlightMessage ? highlightScale : 1.0,
+                  child: Text(
+                    textMessage,
+                    style: emojiMessageConfig?.textStyle ??
+                        const TextStyle(fontSize: 30),
+                  ),
                 )
-              : Text(
-                  textMessage,
-                  style: _textStyle ??
-                      textTheme.bodyMedium!.copyWith(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                ),
+              : textMessage.isUrl
+                  ? LinkPreview(
+                      linkPreviewConfig: _linkPreviewConfig,
+                      url: textMessage,
+                    )
+                  : Text(
+                      textMessage,
+                      style: _textStyle ??
+                          textTheme.bodyMedium!.copyWith(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                    ),
         ),
         if (message.reaction.reactions.isNotEmpty)
           ReactionWidget(
