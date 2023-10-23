@@ -86,7 +86,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
       sendMessageConfig?.textFieldConfig;
 
   OutlineInputBorder get _outLineBorder => OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.transparent),
+        borderSide: const BorderSide(color: Colors.grey),
         borderRadius: textFieldConfig?.borderRadius ??
             BorderRadius.circular(textFieldBorderRadius),
       );
@@ -132,11 +132,6 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
       padding:
           textFieldConfig?.padding ?? const EdgeInsets.symmetric(horizontal: 6),
       margin: textFieldConfig?.margin,
-      decoration: BoxDecoration(
-        borderRadius: textFieldConfig?.borderRadius ??
-            BorderRadius.circular(textFieldBorderRadius),
-        color: sendMessageConfig?.textFieldBackgroundColor ?? Colors.white,
-      ),
       child: ValueListenableBuilder<bool>(
         valueListenable: isRecording,
         builder: (_, isRecordingValue, child) {
@@ -190,86 +185,88 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                             letterSpacing: 0.25,
                           ),
                       contentPadding: textFieldConfig?.contentPadding ??
-                          const EdgeInsets.symmetric(horizontal: 6),
+                          const EdgeInsets.symmetric(horizontal: 24),
                       border: _outLineBorder,
                       focusedBorder: _outLineBorder,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: textFieldConfig?.borderRadius ??
-                            BorderRadius.circular(textFieldBorderRadius),
-                      ),
+                      enabledBorder: _outLineBorder,
                     ),
                   ),
                 ),
               ValueListenableBuilder<String>(
                 valueListenable: _inputText,
                 builder: (_, inputTextValue, child) {
-                  if (inputTextValue.isNotEmpty) {
-                    return IconButton(
-                      color: sendMessageConfig?.defaultSendButtonColor ??
-                          Colors.green,
-                      onPressed: () {
-                        widget.onPressed();
-                        _inputText.value = '';
-                      },
-                      icon: sendMessageConfig?.sendButtonIcon ??
-                          const Icon(Icons.send),
-                    );
-                  } else {
-                    return Row(
-                      children: [
-                        if (!isRecordingValue) ...[
-                          if (sendMessageConfig?.enableCameraImagePicker ??
-                              true)
-                            IconButton(
-                              constraints: const BoxConstraints(),
-                              onPressed: () => _onIconPressed(
-                                ImageSource.camera,
-                                config:
-                                    sendMessageConfig?.imagePickerConfiguration,
+                  return Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          widget.onPressed();
+                          _inputText.value = '';
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          margin: const EdgeInsets.only(left: 24),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey,
+                          ),
+                          child: sendMessageConfig?.sendButtonIcon ??
+                              Icon(
+                                Icons.send,
+                                color:
+                                    sendMessageConfig?.defaultSendButtonColor ??
+                                        Colors.green,
                               ),
-                              icon: imagePickerIconsConfig
-                                      ?.cameraImagePickerIcon ??
-                                  Icon(
-                                    Icons.camera_alt_outlined,
-                                    color:
-                                        imagePickerIconsConfig?.cameraIconColor,
-                                  ),
-                            ),
-                          if (sendMessageConfig?.enableGalleryImagePicker ??
-                              true)
-                            IconButton(
-                              constraints: const BoxConstraints(),
-                              onPressed: () => _onIconPressed(
-                                ImageSource.gallery,
-                                config:
-                                    sendMessageConfig?.imagePickerConfiguration,
-                              ),
-                              icon: imagePickerIconsConfig
-                                      ?.galleryImagePickerIcon ??
-                                  Icon(
-                                    Icons.image,
-                                    color: imagePickerIconsConfig
-                                        ?.galleryIconColor,
-                                  ),
-                            ),
-                        ],
-                        if (sendMessageConfig?.allowRecordingVoice ??
-                            true &&
-                                Platform.isIOS &&
-                                Platform.isAndroid &&
-                                !kIsWeb)
+                        ),
+                      ),
+                      if (!isRecordingValue) ...[
+                        if (sendMessageConfig?.enableCameraImagePicker ?? true)
                           IconButton(
-                            onPressed: _recordOrStop,
-                            icon: (isRecordingValue
-                                    ? voiceRecordingConfig?.micIcon
-                                    : voiceRecordingConfig?.stopIcon) ??
-                                Icon(isRecordingValue ? Icons.stop : Icons.mic),
-                            color: voiceRecordingConfig?.recorderIconColor,
-                          )
+                            constraints: const BoxConstraints(),
+                            onPressed: () => _onIconPressed(
+                              ImageSource.camera,
+                              config:
+                                  sendMessageConfig?.imagePickerConfiguration,
+                            ),
+                            icon:
+                                imagePickerIconsConfig?.cameraImagePickerIcon ??
+                                    Icon(
+                                      Icons.camera_alt_outlined,
+                                      color: imagePickerIconsConfig
+                                          ?.cameraIconColor,
+                                    ),
+                          ),
+                        if (sendMessageConfig?.enableGalleryImagePicker ?? true)
+                          IconButton(
+                            constraints: const BoxConstraints(),
+                            onPressed: () => _onIconPressed(
+                              ImageSource.gallery,
+                              config:
+                                  sendMessageConfig?.imagePickerConfiguration,
+                            ),
+                            icon: imagePickerIconsConfig
+                                    ?.galleryImagePickerIcon ??
+                                Icon(
+                                  Icons.image,
+                                  color:
+                                      imagePickerIconsConfig?.galleryIconColor,
+                                ),
+                          ),
                       ],
-                    );
-                  }
+                      if (sendMessageConfig?.allowRecordingVoice ??
+                          true &&
+                              Platform.isIOS &&
+                              Platform.isAndroid &&
+                              !kIsWeb)
+                        IconButton(
+                          onPressed: _recordOrStop,
+                          icon: (isRecordingValue
+                                  ? voiceRecordingConfig?.micIcon
+                                  : voiceRecordingConfig?.stopIcon) ??
+                              Icon(isRecordingValue ? Icons.stop : Icons.mic),
+                          color: voiceRecordingConfig?.recorderIconColor,
+                        )
+                    ],
+                  );
                 },
               ),
             ],
