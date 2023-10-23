@@ -106,24 +106,23 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
           )
         : Align(
             alignment: Alignment.bottomCenter,
-            child: SizedBox(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                ),
+              ),
               width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
-                  Positioned(
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height /
-                          ((!kIsWeb && Platform.isIOS) ? 24 : 28),
-                      color: widget.backgroundColor ?? Colors.white,
-                    ),
-                  ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(
                       bottomPadding4,
-                      bottomPadding4,
+                      24,
                       bottomPadding4,
                       _bottomPadding,
                     ),
@@ -148,22 +147,23 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                   left: 0.4,
                                 ),
                                 padding: const EdgeInsets.fromLTRB(
-                                  leftPadding,
-                                  leftPadding,
-                                  leftPadding,
+                                  6,
+                                  0,
+                                  6,
                                   30,
                                 ),
                                 child: Container(
-                                  margin: const EdgeInsets.only(bottom: 2),
+                                  margin: const EdgeInsets.only(bottom: 16),
                                   padding: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                    horizontal: 6,
+                                    vertical: 8,
+                                    horizontal: 24,
                                   ),
                                   decoration: BoxDecoration(
                                     color: widget.sendMessageConfig
                                             ?.replyDialogColor ??
                                         Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(
+                                        textFieldBorderRadius),
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
