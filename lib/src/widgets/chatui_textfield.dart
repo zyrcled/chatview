@@ -205,9 +205,10 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           margin: const EdgeInsets.only(left: 24),
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.grey,
+                            color: sendMessageConfig?.defaultSendButtonColor ??
+                                Colors.grey,
                           ),
                           child: sendMessageConfig?.sendButtonIcon ??
                               Icon(
