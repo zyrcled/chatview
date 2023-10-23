@@ -70,6 +70,9 @@ class ChatBackgroundConfiguration {
   /// message.
   final Curve messageTimeAnimationCurve;
 
+  /// The padding of the last message respect to the Send Message Widget.
+  final double lastMessageBottonPadding;
+
   const ChatBackgroundConfiguration({
     this.defaultGroupSeparatorConfig,
     this.backgroundColor,
@@ -85,6 +88,7 @@ class ChatBackgroundConfiguration {
     this.messageTimeIconColor,
     this.loadingWidget,
     this.messageTimeAnimationCurve = Curves.decelerate,
+    this.lastMessageBottonPadding = 40,
   });
 }
 
