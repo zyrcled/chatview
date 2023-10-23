@@ -44,6 +44,9 @@ class ChatBubble {
   /// Used to give text style of message sender name.
   final TextStyle? senderNameTextStyle;
 
+  /// Used to give padding of message sender name.
+  final EdgeInsetsGeometry? senderNamePadding;
+
   /// Used to provide builders for last seen message reciept,
   /// at latest outgoing messsage.
   final ReceiptsWidgetConfig? receiptsWidgetConfig;
@@ -62,5 +65,6 @@ class ChatBubble {
     this.senderNameTextStyle,
     this.receiptsWidgetConfig,
     this.onMessageRead,
+    this.senderNamePadding,
   });
 }

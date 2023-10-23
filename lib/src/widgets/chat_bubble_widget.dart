@@ -299,9 +299,9 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
       children: [
         if ((chatController?.chatUsers.length ?? 0) > 1 && !isMessageBySender)
           Padding(
-            padding:
-                widget.chatBubbleConfig?.inComingChatBubbleConfig?.padding ??
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: widget.chatBubbleConfig?.inComingChatBubbleConfig
+                    ?.senderNamePadding ??
+                const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Text(
               messagedUser?.name ?? '',
               style: widget.chatBubbleConfig?.inComingChatBubbleConfig
