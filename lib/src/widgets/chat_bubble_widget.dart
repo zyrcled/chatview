@@ -162,14 +162,14 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment:
             isMessageBySender ? MainAxisAlignment.end : MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isMessageBySender &&
               (featureActiveConfig?.enableOtherUserProfileAvatar ?? true))
             ProfileCircle(
               bottomPadding: widget.message.reaction.reactions.isNotEmpty
-                  ? profileCircleConfig?.bottomPadding ?? 15
-                  : profileCircleConfig?.bottomPadding ?? 2,
+                  ? profileCircleConfig?.bottomPadding ?? 0
+                  : profileCircleConfig?.bottomPadding ?? 0,
               profileCirclePadding: profileCircleConfig?.padding,
               imageUrl: messagedUser?.profilePhoto,
               circleRadius: profileCircleConfig?.circleRadius,
@@ -297,17 +297,17 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
       crossAxisAlignment:
           isMessageBySender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        if ((chatController?.chatUsers.length ?? 0) > 1 && !isMessageBySender)
-          Padding(
-            padding: widget.chatBubbleConfig?.inComingChatBubbleConfig
-                    ?.senderNamePadding ??
-                const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Text(
-              messagedUser?.name ?? '',
-              style: widget.chatBubbleConfig?.inComingChatBubbleConfig
-                  ?.senderNameTextStyle,
-            ),
-          ),
+        // if ((chatController?.chatUsers.length ?? 0) > 1 && !isMessageBySender)
+        //   Padding(
+        //     padding: widget.chatBubbleConfig?.inComingChatBubbleConfig
+        //             ?.senderNamePadding ??
+        //         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        //     child: Text(
+        //       messagedUser?.name ?? '',
+        //       style: widget.chatBubbleConfig?.inComingChatBubbleConfig
+        //           ?.senderNameTextStyle,
+        //     ),
+        //   ),
         if (replyMessage.isNotEmpty)
           widget.repliedMessageConfig?.repliedMessageWidgetBuilder != null
               ? widget.repliedMessageConfig!
