@@ -30,5 +30,10 @@ export 'src/controller/chat_controller.dart';
 export 'src/values/typedefs.dart';
 export 'package:audio_waveforms/audio_waveforms.dart'
     show WaveStyle, PlayerWaveStyle;
+
 export 'src/models/receipts_widget_config.dart';
+//Necessary exports for customizing Send Message TextField
+export 'src/extensions/extensions.dart';
+export 'src/utils/package_strings.dart';
+export 'src/widgets/chatui_textfield.dart';
 export 'src/extensions/extensions.dart' show MessageTypes;
